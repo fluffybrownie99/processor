@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  description: API that does event stats for media uploads and playbacks on a home media server.
+  version: "1.0.0"
+  title: Local Media Server Storage Statistics API
+  contact:
+    email: rrajan19@my.bcit.ca
+tags:
+  - name: HomeServer
+    description: Operations available for home media server.
+
+paths:
+  /home/media/stats:
+    get:
+      tags:
+        - HomeServer
+      summary: Gets the event stats
+      operationId: app.get_stats
+      description: Gets Media Upload and Media Playback processed statistics
+      responses:
+        '200':
+            description: Successfully returned Media Server statistics
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      total_uploads:
+                        type: integer
+                      total_playbacks:
+                        type: integer
+                      largest_file:
+                        type: integer
+                      most_accessed_file:
+                        type: integer                        
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
