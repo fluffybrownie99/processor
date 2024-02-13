@@ -58,11 +58,12 @@ def populate_stats():
     current_stats = session.query(ServerStats).order_by(ServerStats.last_updated.desc()).first()
     if current_stats:
         last_updated = current_stats.last_updated.strftime('%Y-%m-%d %H:%M:%S')
-
     else:
         last_updated = '2020-01-01 00:00:00'
+
     current_datetime = datetime.datetime.now()
     current_datetime_formatted = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    
     upload_response = requests.get(app_config['eventstore']['url']+'/home/media/upload', params={'start_timestamp': last_updated, 'end_timestamp': current_datetime_formatted})
     playback_response = requests.get(app_config['eventstore']['url']+'/home/media/playback', params={'start_timestamp': last_updated, 'end_timestamp': current_datetime_formatted})
     upload_response_data = upload_response.json()
